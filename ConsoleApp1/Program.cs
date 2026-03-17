@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
 
 namespace TransportCompany
 {
@@ -60,25 +61,87 @@ namespace TransportCompany
         }
     }
 }
+
 namespace TransportCompany
 {
     class Program
     {
+        static List<Sofer> soferi = new List<Sofer>();
+
         static void Main(string[] args)
         {
-            Sofer sofer1 = new Sofer(1, "Ana Antonescu");
-            Masina masina1 = new Masina("Mercedes Sprinter", "SV10ABC");
+            string optiune;
 
-            Traseu traseu1 = new Traseu("Suceava", "Cluj", 300);
+            do
+            {
+                Console.WriteLine("\n=== MENIU ===");
+                Console.WriteLine("1. Adauga sofer");
+                Console.WriteLine("2. Afiseaza soferi");
+                Console.WriteLine("3. Cauta sofer dupa nume");
+                Console.WriteLine("0. Iesire");
 
-            Cursa cursa1 = new Cursa(sofer1, masina1, traseu1.Distanta);
+                Console.Write("Alege optiunea: ");
+                optiune = Console.ReadLine();
 
-            Console.WriteLine("Sofer: " + sofer1.Nume);
-            Console.WriteLine("Traseu: " + traseu1.Plecare + " -> " + traseu1.Destinatie);
-            Console.WriteLine("Distanta: " + traseu1.Distanta + " km");
+                switch (optiune)
+                {
+                    case "1":
+                        AdaugaSofer();
+                        break;
+                    case "2":
+                        AfiseazaSoferi();
+                        break;
+                    case "3":
+                        CautaSofer();
+                        break;
+                }
 
-            Console.WriteLine("Kilometri parcursi de sofer: " + sofer1.Kilometri);
-            Console.WriteLine("Kilometri parcursi de masina: " + masina1.Kilometri);
+            } while (optiune != "0");
+        }
+
+        static void AdaugaSofer()
+        {
+            Console.Write("ID: ");
+            int id = int.Parse(Console.ReadLine());
+
+            Console.Write("Nume: ");
+            string nume = Console.ReadLine();
+
+            Sofer s = new Sofer(id, nume);
+            soferi.Add(s);
+
+            Console.WriteLine("Sofer adaugat!");
+        }
+
+        static void AfiseazaSoferi()
+        {
+            if (soferi.Count == 0)
+            {
+                Console.WriteLine("Nu exista soferi.");
+                return;
+            }
+
+            foreach (Sofer s in soferi)
+            {
+                Console.WriteLine($"ID: {s.Id}, Nume: {s.Nume}, Km: {s.Kilometri}");
+            }
+        }
+
+        static void CautaSofer()
+        {
+            Console.Write("Introdu nume: ");
+            string nume = Console.ReadLine();
+
+            foreach (Sofer s in soferi)
+            {
+                if (s.Nume.ToLower() == nume.ToLower())
+                {
+                    Console.WriteLine($"Gasit: {s.Nume}, Km: {s.Kilometri}");
+                    return;
+                }
+            }
+
+            Console.WriteLine("Soferul nu a fost gasit.");
         }
     }
 }
