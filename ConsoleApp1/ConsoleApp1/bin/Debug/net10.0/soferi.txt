@@ -1,0 +1,4 @@
+1,andra,0
+1,Ana,0
+2,Ina,0
+3,Indra,0
